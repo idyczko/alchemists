@@ -17,7 +17,7 @@ app.get('/db', function(req, res) {
 			} else {
 				res.render('db', {results: results.rows});
 			}
-		}))
+		})
 	})
 });
 
