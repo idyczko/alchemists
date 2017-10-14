@@ -1,7 +1,6 @@
-	var express = require('express');
+var express = require('express');
 var app = express();
-var server = require('http').serverer(app);
-var pg = require('pg');
+var server = require('http').Server(app);
 
 app.get('/', function(req, res) {
 	res.sendFile(__dirname + '/client/index.html');
@@ -10,7 +9,10 @@ app.get('/', function(req, res) {
 app.use('/client', express.static(__dirname + '/client'));
 
 server.listen(process.env.PORT || 3000);
-console.log("serverer has been started successfully");
+console.log("Server has been started successfully...");
 
 var io = require('socket.io')(server, {});
-
+io.sockets.on('connection', function(socket){
+	console.log('Opened socket connection: ');
+	console.log(socket);
+});
