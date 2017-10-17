@@ -4,9 +4,30 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
 	</head>
 	<body>
+		<h1> Alchemicy! </h1>
+
+		<div id="game_chat_wrapper" style="width: 500px; height: 500px; overflow-y: scroll;border: 1px solid;">
+		</div>
+
+		<form id="game_chat_form">
+			<input id="game_chat_input" type="text" />
+		</form>
+
 		<script>
 			var socket = io();
+			var chatText = document.getElementById("game_chat_wrapper");
+			var chatForm = document.getElementById("game_chat_form");
+			var chatInput = document.getElementById("game_chat_input");
+
+			socket.on("appendNewMessage", function(message) {
+				chatText.innerHTML += '<div>' + message + '</div>';
+			});
+
+			chatForm.onsubmit = function(event) {
+				event.preventDefault();
+				socket.emit("sendMessage", chatInput.value);
+				chatInput.value = "";
+			}
 		</script>
-		<h1> Alchemicy! </h1>
 	</body>
 </html>
