@@ -26,8 +26,9 @@ io.sockets.on('connection', function(socket){
 	});
 
 	socket.on("sendMessage", function(message) {
+		message.sender = this.id;
 		for(var i in ACTIVE_SOCKETS) {
-			ACTIVE_SOCKETS[i].emit("appendNewMessage", socket.id + ": " + message);
+			ACTIVE_SOCKETS[i].emit("appendNewMessage", message);
 		}
 	});
 });
